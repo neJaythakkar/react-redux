@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Result from '../../components/results';
 import * as actions from '../../store/actions/Results';
+import * as counterSelectors from '../../store/selectors/counter';
+import * as resultsSelectors from '../../store/selectors/results';
+import * as classes from './results.module.scss';
 
 class Results extends Component {
 	render() {
@@ -15,11 +19,9 @@ class Results extends Component {
 				<button onClick={() => storeCounterResult({ value: counter })}>
 					Store Result
 				</button>
-				<ul className='resultContainer'>
+				<ul className={classes.resultContainer}>
 					{results.map(item => (
-						<li key={item.id} onClick={() => deleteCounterResult(item)}>
-							{item.value}
-						</li>
+						<Result {...item} deleteHandler={deleteCounterResult} />
 					))}
 				</ul>
 			</div>
@@ -27,8 +29,8 @@ class Results extends Component {
 	}
 }
 const mapStateToProps = state => ({
-	results: state.results.results,
-	counter: state.ctr.counter
+	results: resultsSelectors.getResults(state),
+	counter: counterSelectors.getCounterValue(state)
 });
 const mapDispatchToProps = dispatch => ({
 	storeCounterResult: result => dispatch(actions.storeCounterResult(result)),

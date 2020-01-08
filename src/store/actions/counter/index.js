@@ -1,12 +1,17 @@
 import * as actionTypes from '../../actionTypes/counter';
+import { createSetter } from '../../index';
+const NAME = 'counter';
 
-export const incrementCounter = () => ({type:actionTypes.INCREMENT})
-
-export const decrementCounter = () => ({type:actionTypes.DECREMENT})
-
-export const addCounter = (payload) => ({type:actionTypes.ADD,payload})
-
-export const subtractCounter = (payload) => ({type:actionTypes.SUBTRACT,payload})
-
-export const resetCounter = (payload) => ({type:actionTypes.RESET})
+export const [
+	incrementCounter,
+	decrementCounter,
+	addCounter,
+	subtractCounter,resetCounter
+] = createSetter(NAME, [
+	actionTypes.INCREMENT,
+	actionTypes.DECREMENT,
+	actionTypes.ADD,
+	actionTypes.SUBTRACT,
+	actionTypes.RESET
+]);
 

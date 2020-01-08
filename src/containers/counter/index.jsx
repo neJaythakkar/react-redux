@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as counterActions from '../../store/actions/counter';
+import * as selectors from '../../store/selectors/counter';
 
 class Counter extends Component {
 	render() {
@@ -30,15 +31,15 @@ class Counter extends Component {
 }
 
 const mapStateToProps = state => ({
-	counter: state.ctr.counter
+	counter: selectors.getCounterValue(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-	incrementCounter: () => dispatch(counterActions.incrementCounter()),
-	decrementCounter: () => dispatch(counterActions.decrementCounter()),
-	addCounter: (value) => dispatch(counterActions.addCounter({value})),
-	subtractCounter: (value) => dispatch(counterActions.subtractCounter({value})),
-	resetCounter: () => dispatch(counterActions.resetCounter())
-});
+const mapDispatchToProps = {
+	incrementCounter: counterActions.incrementCounter,
+	decrementCounter: counterActions.decrementCounter,
+	addCounter: (value) => counterActions.addCounter({value}),
+	subtractCounter: (value) => counterActions.subtractCounter({value}),
+	resetCounter: counterActions.resetCounter
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
